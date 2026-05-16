@@ -19,7 +19,7 @@ const playlist = [
     fav:    true,
     color:  "#f06292",   // album art dominant color
     accent: "#ce93d8",   // album art accent ring
-    src: "./pixel-love-files/pixel-love/music/sakura.mp3"
+    src: "./pixel-love-files/pixel-love/music/Sakura.mp3"
   },
   {
     title:  "Min Ma Shi lo Ma Phit Bu Thi Lr",
