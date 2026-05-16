@@ -38,12 +38,12 @@ const playlist = [
     src: "./pixel-love-files/pixel-love/music/minshitae.mp3"
   },
   {
-    title:  "Cassette Love",
-    artist: "RetroNight",
+    title:  "Chit Nay P",
+    artist: "Oak Soe Khant",
     fav:    false,
     color:  "#c2185b",
     accent: "#f48fb1",
-    // src: "music/cassette-love.mp3"
+    src: "./pixel-love-files/pixel-love/music/chitnayp.mp3"
   },
   {
     title:  "Moonlit Garden",
@@ -54,12 +54,12 @@ const playlist = [
     // src: "music/moonlit-garden.mp3"
   },
   {
-    title:  "Soft Echoes",
-    artist: "Lo-fi Hearts",
+    title:  "Due Htout P",
+    artist: "Y Wine",
     fav:    true,
     color:  "#e91e8c",
     accent: "#fce4ec",
-    // src: "music/soft-echoes.mp3"
+    src: "./pixel-love-files/pixel-love/music/duehtoutp.mp3"
   },
 ];
 
