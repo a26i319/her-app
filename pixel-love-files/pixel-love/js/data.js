@@ -46,12 +46,12 @@ const playlist = [
     src: "./pixel-love-files/pixel-love/music/chitnayp.mp3"
   },
   {
-    title:  "Moonlit Garden",
-    artist: "Pixel Romance",
+    title:  "Lay Hr Nel",
+    artist: "Lu Hpring",
     fav:    false,
     color:  "#ad1457",
     accent: "#e8c7f0",
-    // src: "music/moonlit-garden.mp3"
+    src: "./pixel-love-files/pixel-love/music/layhrnel.mp3"
   },
   {
     title:  "Due Htout P",
@@ -67,16 +67,21 @@ const playlist = [
 const messages = [
   "I'm also sorry for yesterday... but I hope we can make more happy memories together! ♡",
   "Will you be forgiven? I promise to be the best pixel pet I can be! 🌸",
-  "You make ordinary moments feel magical. ♡",
-  "Every song reminds me of you, somehow...",
   "This playlist was made just for you ♡",
   "You are my favorite song on repeat 🌸",
-  "Thank you for existing in my world ♡",
-  "Like a save point — you're my safe place.",
-  "Press ♡ to save this feeling forever.",
-  "You're the melody I never want to end.",
-  "Even pixels feel softer around you 🌸",
-  "You're my favorite chapter, always. ♡",
+  "Side quest: make you smile today ♡",
+  "Hydration check! Pixel pets worry about you too ♡",
+  "Small steps still count ✨",
+  "I hope something good surprises you today 🌸",
+  "You survived 100% of your difficult days so far ♡",
+  "Even resting is progress 🌙",
+  "A tiny pause is still productive ✨",
+  "Your existence makes this little app happier 🌸",
+  "Don’t forget to breathe your shoulders down a little ♡",
+  "Today’s mission: be kind to yourself ✨",
+  "Sending a small pixel hug 🌸",
+  "It’s okay to recharge slowly ♡",
+  "Even pixels feel softer around you 🌸"
 ];
 
 /* Pixel pet speech bubbles */

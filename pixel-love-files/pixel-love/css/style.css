@@ -46,7 +46,7 @@ body {
   min-height: 100vh;
   overflow: hidden;
   /* heart cursor */
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext y='16' font-size='16'%3E❤️%3C/text%3E%3C/svg%3E") 8 8, auto;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext y='16' font-size='16'%3E😼%3C/text%3E%3C/svg%3E") 8 8, auto;
 }
 
 /* ══════════════════════════════════════════════════
