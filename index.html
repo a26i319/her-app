@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>♡ Shoon's Love Music ♡</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Our styles -->
+  <link rel="stylesheet" href="./pixel-love-files/pixel-love/css/style.css" />
+</head>
+<body>
+
+  <!-- ═══ CANVAS BACKGROUND ═══ -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- ═══ CRT EFFECTS ═══ -->
+  <div class="crt-overlay"></div>
+  <div class="crt-vignette"></div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 1 · BOOT
+  ════════════════════════════════════════ -->
+  <div id="bootScreen">
+    <div class="boot-heart">♡</div>
+    <div class="boot-logo">
+      Shoon's MUSIC STUDIO<br />
+      <span class="boot-logo-sub">ver. 1.0 — for you ♡</span>
+    </div>
+    <div class="boot-bar-wrap">
+      <div class="boot-bar" id="bootBar"></div>
+    </div>
+    <div class="boot-text" id="bootText">
+      Loading memories<span class="boot-blink">_</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 2 · PRESS START
+  ════════════════════════════════════════ -->
+  <div id="startScreen">
+    <div class="pixel-hearts-row">💗 💖 💗 💖 💗</div>
+    <div class="start-big">♡ Shoon's MUSIC ♡</div>
+    <div class="start-title">
+      MUSIC PLAYER<br />
+      <span class="start-sub">~ a gift just for you ~</span>
+    </div>
+    <button class="press-start-btn" onclick="startApp()">[ PRESS START ❤️ ]</button>
+    <div class="start-credit">© 2026 made by ThuRein</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN 3 · MAIN APP
+  ════════════════════════════════════════ -->
+  <div id="mainApp">
+    <div class="console">
+
+      <!-- Header -->
+      <div class="console-header">
+        <div class="console-title">♡ Shoon's MUSIC ♡</div>
+        <div class="console-sub">your personal soundtrack</div>
+        <div class="header-stars">✦</div>
+      </div>
+
+      <!-- Album art + track info -->
+      <div class="album-section">
+        <div class="album-frame">
+          <canvas id="albumCanvas" width="110" height="110"></canvas>
+        </div>
+        <div class="album-info">
+          <div class="track-label">NOW PLAYING:</div>
+          <div class="track-name" id="trackName">Select a Song</div>
+          <div class="track-artist" id="trackArtist">~ Artist ~</div>
+          <div class="fav-badge" id="favBadge" style="display:none">★ OUR FAVORITE ★</div>
+
+          <!-- Equalizer bars -->
+          <div class="eq-wrap" id="eqWrap">
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="progress-section">
+        <div class="progress-track" id="progressTrack" onclick="seekTo(event)">
+          <div class="progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+        <div class="time-row">
+          <span id="currentTime">0:00</span>
+          <span id="totalTime">0:00</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button class="ctrl-btn"      onclick="prevTrack()"  title="Previous">◀◀</button>
+        <button class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()">▶ PLAY</button>
+        <button class="ctrl-btn"      onclick="nextTrack()"  title="Next">▶▶</button>
+        <button class="ctrl-btn"      onclick="toggleLoop()" id="loopBtn" title="Loop">↺</button>
+      </div>
+
+      <!-- Volume -->
+      <div class="volume-row">
+        <span class="vol-icon">🔈</span>
+        <input type="range" class="vol-slider" id="volSlider"
+              min="0" max="100" value="70"
+              oninput="setVolume(this.value)" />
+        <span class="vol-icon">🔊</span>
+        <span class="vol-label" id="volDisplay">70</span>
+      </div>
+
+      <!-- Playlist -->
+      <div class="playlist-section">
+        <div class="section-header">♡ PLAYLIST</div>
+        <div class="playlist-list" id="playlistList"></div>
+      </div>
+
+      <!-- Dialogue box -->
+      <div class="dialogue-box">
+        <span class="dialogue-face">🌸</span>
+        <span class="dialogue-text" id="dialogueText"></span>
+        <span class="dialogue-cursor"></span>
+      </div>
+
+      <!-- Footer -->
+      <div class="console-footer">
+        <div class="footer-dots">
+          <div class="footer-dot active" id="dot0"></div>
+          <div class="footer-dot"        id="dot1"></div>
+          <div class="footer-dot"        id="dot2"></div>
+          <div class="footer-dot"        id="dot3"></div>
+          <div class="footer-dot"        id="dot4"></div>
+        </div>
+        <div class="footer-credit">made by ThuRein for you to be special</div>
+      </div>
+
+    </div><!-- /.console -->
+  </div><!-- /#mainApp -->
+
+  <!-- ═══ PIXEL PET ═══ -->
+  <canvas id="petCanvas" width="48" height="48" onclick="petClicked()"></canvas>
+  <div class="pet-bubble" id="petBubble">( ´ ▽ ` )ﾉ ♡</div>
+
+  <!-- ═══ SCRIPTS (order matters) ═══ -->
+  <script src="./pixel-love-files/pixel-love/js/data.js"></script>
+  <script src="./pixel-love-files/pixel-love/js/canvas.js"></script>
+  <script src="./pixel-love-files/pixel-love/js/player.js"></script>
+  <script src="./pixel-love-files/pixel-love/js/app.js"></script>
+
+</body>
+</html>

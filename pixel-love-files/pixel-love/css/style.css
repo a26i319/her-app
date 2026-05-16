@@ -1,0 +1,621 @@
+/* ════════════════════════════════════════════════════
+   style.css  —  Pixel Love Music · Pink & White Theme
+   ════════════════════════════════════════════════════ */
+
+/* ── CSS VARIABLES ── */
+:root {
+  /* Core pink palette */
+  --pink-deep:    #d63384;   /* deep rose — borders, accents    */
+  --pink-hot:     #e91e8c;   /* hot pink  — glow, active states  */
+  --pink-mid:     #f06292;   /* medium    — buttons, dividers     */
+  --pink-soft:    #f8bbd9;   /* soft pink — text on dark          */
+  --pink-pale:    #fce4ec;   /* palest    — hover fills           */
+  --pink-neon:    #ff69b4;   /* neon      — titles, highlights    */
+
+  /* White / cream — new primary surfaces */
+  --white:        #ffffff;
+  --cream:        #fff5f8;   /* warm white card background        */
+  --cream-border: #fadadd;   /* very soft pink border on white    */
+  --cream-dark:   #f9e4ec;   /* slightly deeper cream             */
+
+  /* Accent / supporting */
+  --lavender:     #e8c7f0;
+  --lavender-mid: #ce93d8;
+  --gold:         #f9a8c9;   /* re-toned to rose-gold             */
+
+  /* Shadow & glow */
+  --shadow-pink:  rgba(233, 30, 140, 0.25);
+  --glow-soft:    rgba(255, 105, 180, 0.18);
+
+  /* Boot / dark intro (kept dark for contrast) */
+  --dark-bg:      #1a0020;
+  --dark-card:    #2d0038;
+}
+
+/* ── RESET ── */
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  image-rendering: pixelated;
+}
+
+/* ── BODY ── */
+body {
+  background: var(--cream);
+  font-family: 'Press Start 2P', monospace;
+  min-height: 100vh;
+  overflow: hidden;
+  /* heart cursor */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext y='16' font-size='16'%3E❤️%3C/text%3E%3C/svg%3E") 8 8, auto;
+}
+
+/* ══════════════════════════════════════════════════
+   CANVAS BACKGROUND
+══════════════════════════════════════════════════ */
+#bgCanvas {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════
+   CRT OVERLAY  (very subtle on light bg)
+══════════════════════════════════════════════════ */
+.crt-overlay {
+  position: fixed; inset: 0;
+  z-index: 999; pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 182, 193, 0.04) 2px,
+    rgba(255, 182, 193, 0.04) 4px
+  );
+  animation: flicker 0.18s infinite linear alternate;
+}
+.crt-vignette {
+  position: fixed; inset: 0;
+  z-index: 998; pointer-events: none;
+  background: radial-gradient(ellipse at center,
+    transparent 55%,
+    rgba(214, 51, 132, 0.10) 100%
+  );
+}
+@keyframes flicker {
+  0%   { opacity: 1; }
+  100% { opacity: 0.98; }
+}
+
+/* ══════════════════════════════════════════════════
+   BOOT SCREEN  (keeps dark feel for impact)
+══════════════════════════════════════════════════ */
+#bootScreen {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--dark-bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 24px;
+}
+
+.boot-heart {
+  font-size: 52px;
+  animation: heartbeat 0.8s infinite;
+  filter: drop-shadow(0 0 18px var(--pink-hot));
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.32); }
+}
+
+.boot-logo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(10px, 2.4vw, 18px);
+  color: var(--pink-neon);
+  text-shadow: 0 0 20px var(--pink-hot), 0 0 40px var(--pink-hot);
+  text-align: center;
+  line-height: 2.2;
+  letter-spacing: 2px;
+}
+.boot-logo-sub {
+  font-size: 0.6em;
+  color: var(--lavender-mid);
+}
+
+.boot-bar-wrap {
+  width: 280px;
+  border: 3px solid var(--pink-mid);
+  box-shadow: 0 0 14px var(--shadow-pink);
+  padding: 4px;
+}
+.boot-bar {
+  height: 14px;
+  background: linear-gradient(90deg, var(--pink-hot), var(--lavender-mid));
+  width: 0%;
+  transition: width 0.05s linear;
+  box-shadow: 0 0 8px var(--pink-neon);
+}
+
+.boot-text {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: var(--pink-soft);
+  letter-spacing: 1px;
+  text-align: center;
+}
+.boot-blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ══════════════════════════════════════════════════
+   START SCREEN
+══════════════════════════════════════════════════ */
+#startScreen {
+  position: fixed; inset: 0; z-index: 190;
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px;
+  /* soft pink gradient background */
+  background: linear-gradient(160deg, var(--cream) 0%, var(--pink-pale) 60%, var(--cream) 100%);
+}
+
+.pixel-hearts-row {
+  display: flex; gap: 12px;
+  font-size: 22px;
+  animation: floatRow 3s ease-in-out infinite;
+}
+@keyframes floatRow {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.start-big {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(14px, 3.5vw, 28px);
+  color: var(--pink-deep);
+  text-shadow: 0 0 20px var(--shadow-pink);
+  animation: titlePulse 2s ease-in-out infinite;
+  text-align: center;
+}
+@keyframes titlePulse {
+  0%, 100% { text-shadow: 0 0 16px var(--shadow-pink); }
+  50%       { text-shadow: 0 0 36px var(--pink-hot), 0 0 60px var(--glow-soft); }
+}
+
+.start-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1.8vw, 13px);
+  color: var(--pink-mid);
+  text-align: center;
+  line-height: 2.4;
+}
+.start-sub {
+  font-size: 0.78em;
+  color: var(--lavender-mid);
+}
+
+.press-start-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1.8vw, 13px);
+  color: var(--pink-deep);
+  text-shadow: 0 0 8px var(--shadow-pink);
+  animation: blink 1s step-end infinite;
+  cursor: pointer;
+  background: none; border: none;
+  padding: 16px 24px;
+  letter-spacing: 2px;
+}
+
+.start-credit {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: var(--pink-mid);
+  opacity: 0.55;
+  letter-spacing: 1px;
+}
+
+/* ══════════════════════════════════════════════════
+   MAIN APP WRAPPER
+══════════════════════════════════════════════════ */
+#mainApp {
+  display: none;
+  position: fixed; inset: 0; z-index: 100;
+  align-items: center; justify-content: center;
+  padding: 12px;
+  /* soft pink gradient page background */
+  background: linear-gradient(135deg,
+    #fff0f5 0%,
+    #fce4ec 40%,
+    #fff5f8 70%,
+    #fce4ec 100%
+  );
+}
+
+/* ══════════════════════════════════════════════════
+   CONSOLE SHELL  (white card with pink borders)
+══════════════════════════════════════════════════ */
+.console {
+  position: relative;
+  width: min(520px, 98vw);
+  max-height: 96vh;
+
+  background: var(--white);
+  border: 4px solid var(--pink-mid);
+  box-shadow:
+    0 0 0 2px var(--pink-pale),
+    0 0 0 5px var(--pink-mid),
+    0 8px 40px var(--shadow-pink),
+    0 2px 80px var(--glow-soft),
+    inset 0 0 40px rgba(255, 182, 193, 0.08);
+
+  padding: 20px 18px 18px;
+  display: flex; flex-direction: column; gap: 14px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.console::-webkit-scrollbar { display: none; }
+
+/* pixel corner hearts */
+.console::before,
+.console::after {
+  content: '♡';
+  position: absolute;
+  font-size: 18px;
+  color: var(--pink-mid);
+  text-shadow: 0 0 6px var(--shadow-pink);
+}
+.console::before { top: 8px; left: 12px; }
+.console::after  { top: 8px; right: 12px; }
+
+/* ── HEADER ── */
+.console-header {
+  text-align: center;
+  padding: 6px 0 10px;
+  border-bottom: 3px solid var(--cream-border);
+  position: relative;
+}
+.console-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1.8vw, 11px);
+  color: var(--pink-deep);
+  text-shadow: 0 0 8px var(--shadow-pink);
+  letter-spacing: 3px;
+}
+.console-sub {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--lavender-mid);
+  margin-top: 4px;
+  letter-spacing: 2px;
+}
+.header-stars {
+  position: absolute; right: 0; top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px; color: var(--pink-mid);
+  animation: spin 4s linear infinite;
+}
+@keyframes spin {
+  from { transform: translateY(-50%) rotate(0deg); }
+  to   { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* ── ALBUM SECTION ── */
+.album-section {
+  display: flex; align-items: center; gap: 14px;
+}
+.album-frame {
+  position: relative;
+  width: 110px; height: 110px;
+  flex-shrink: 0;
+  border: 3px solid var(--pink-mid);
+  box-shadow: 0 0 16px var(--shadow-pink);
+  background: var(--cream);
+}
+.album-frame::before {
+  content: '';
+  position: absolute; inset: -6px;
+  border: 2px solid var(--cream-border);
+  pointer-events: none;
+}
+#albumCanvas { width: 110px; height: 110px; display: block; }
+
+.album-info { flex: 1; min-width: 0; }
+
+.track-label {
+  font-family: 'VT323', monospace;
+  font-size: 13px;
+  color: var(--lavender-mid);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.track-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(6px, 1.5vw, 8px);
+  color: var(--pink-deep);
+  line-height: 1.6;
+  word-break: break-word;
+}
+.track-artist {
+  font-family: 'VT323', monospace;
+  font-size: 17px;
+  color: var(--pink-mid);
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+.fav-badge {
+  display: inline-block;
+  font-family: 'VT323', monospace;
+  font-size: 12px;
+  color: var(--pink-deep);
+  background: var(--pink-pale);
+  border: 2px solid var(--pink-mid);
+  padding: 2px 6px;
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+/* Equalizer bars */
+.eq-wrap {
+  display: flex; align-items: flex-end; gap: 3px;
+  height: 28px; margin-top: 8px;
+}
+.eq-bar {
+  width: 5px; min-height: 3px;
+  background: linear-gradient(to top, var(--pink-hot), var(--lavender-mid));
+  box-shadow: 0 0 4px var(--shadow-pink);
+  transition: height 0.12s ease;
+}
+
+/* ── PROGRESS ── */
+.progress-section { display: flex; flex-direction: column; gap: 6px; }
+
+.progress-track {
+  width: 100%; height: 12px;
+  background: var(--cream-dark);
+  border: 2px solid var(--cream-border);
+  cursor: pointer; position: relative;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink-hot), var(--pink-neon));
+  box-shadow: 0 0 6px var(--shadow-pink);
+  transition: width 0.3s linear;
+  position: relative;
+}
+.progress-fill::after {
+  content: '▶';
+  position: absolute; right: -8px; top: -4px;
+  font-size: 14px; color: var(--pink-deep);
+}
+
+.time-row {
+  display: flex; justify-content: space-between;
+  font-family: 'VT323', monospace;
+  font-size: 16px; color: var(--pink-mid);
+  letter-spacing: 1px;
+}
+
+/* ── CONTROLS ── */
+.controls {
+  display: flex; align-items: center;
+  justify-content: center; gap: 10px;
+}
+.ctrl-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 2vw, 11px);
+  color: var(--pink-deep);
+  background: var(--white);
+  border: 3px solid var(--pink-mid);
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: 0 4px 0 var(--cream-border), 0 0 8px var(--glow-soft);
+  letter-spacing: 1px;
+}
+.ctrl-btn:hover {
+  background: var(--pink-pale);
+  color: var(--pink-deep);
+  box-shadow: 0 4px 0 var(--pink-mid), 0 0 16px var(--shadow-pink);
+  transform: translateY(-2px);
+}
+.ctrl-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--pink-mid);
+}
+.ctrl-btn.play-btn {
+  font-size: clamp(10px, 2.5vw, 14px);
+  padding: 10px 16px;
+  border-color: var(--pink-deep);
+  color: var(--white);
+  background: var(--pink-hot);
+  text-shadow: none;
+  box-shadow: 0 4px 0 var(--pink-deep), 0 0 16px var(--shadow-pink);
+}
+.ctrl-btn.play-btn:hover {
+  background: var(--pink-deep);
+  box-shadow: 0 4px 0 var(--pink-mid), 0 0 24px var(--shadow-pink);
+}
+
+/* ── VOLUME ── */
+.volume-row {
+  display: flex; align-items: center; gap: 10px;
+}
+.vol-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px; color: var(--pink-mid);
+  white-space: nowrap;
+}
+.vol-icon { font-size: 16px; }
+.vol-slider {
+  flex: 1; -webkit-appearance: none; appearance: none;
+  height: 8px;
+  background: var(--cream-dark);
+  border: 2px solid var(--cream-border);
+  outline: none; cursor: pointer;
+}
+.vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  background: var(--pink-hot);
+  border: 2px solid var(--white);
+  box-shadow: 0 0 6px var(--shadow-pink);
+  cursor: pointer;
+}
+.vol-slider::-moz-range-thumb {
+  width: 16px; height: 16px;
+  background: var(--pink-hot);
+  border: 2px solid var(--white);
+  box-shadow: 0 0 6px var(--shadow-pink);
+  cursor: pointer;
+}
+
+/* ── PLAYLIST ── */
+.section-header {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px; color: var(--pink-deep);
+  letter-spacing: 2px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-header::after {
+  content: ''; flex: 1; height: 2px;
+  background: linear-gradient(90deg, var(--pink-pale), transparent);
+}
+
+.playlist-list { display: flex; flex-direction: column; gap: 4px; }
+
+.playlist-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px;
+  border: 2px solid transparent;
+  background: var(--cream);
+  cursor: pointer;
+  transition: all 0.1s;
+  font-family: 'VT323', monospace;
+  font-size: 16px; color: var(--pink-mid);
+  letter-spacing: 1px;
+}
+.playlist-item:hover {
+  border-color: var(--pink-mid);
+  background: var(--pink-pale);
+  color: var(--pink-deep);
+  padding-left: 16px;
+}
+.playlist-item.active {
+  border-color: var(--pink-hot);
+  background: var(--pink-pale);
+  color: var(--pink-deep);
+  box-shadow: 0 0 10px var(--glow-soft);
+}
+.playlist-item.active::before { content: '▶'; margin-right: 4px; font-size: 11px; }
+.item-num   { font-size: 13px; color: var(--lavender-mid); width: 20px; flex-shrink: 0; }
+.item-fav   { color: var(--pink-hot); font-size: 13px; }
+.item-text  { flex: 1; }
+.item-artist-small { font-size: 13px; color: var(--lavender-mid); }
+
+/* ── DIALOGUE BOX ── */
+.dialogue-box {
+  border: 3px solid var(--pink-mid);
+  background: var(--cream);
+  padding: 12px 14px;
+  box-shadow: 0 0 12px var(--glow-soft);
+  position: relative;
+}
+.dialogue-box::before {
+  content: '♡ MESSAGE ♡';
+  position: absolute; top: -10px; left: 12px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px; color: var(--pink-deep);
+  background: var(--cream); padding: 0 6px;
+  letter-spacing: 1px;
+}
+.dialogue-face { font-size: 22px; float: left; margin-right: 10px; margin-top: 2px; }
+.dialogue-text {
+  font-family: 'VT323', monospace;
+  font-size: 18px; color: var(--pink-deep);
+  line-height: 1.5; letter-spacing: 0.5px;
+}
+.dialogue-cursor {
+  display: inline-block;
+  width: 8px; height: 14px;
+  background: var(--pink-hot);
+  margin-left: 3px;
+  animation: blink 0.7s step-end infinite;
+  vertical-align: middle;
+}
+
+/* ── FOOTER ── */
+.console-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 2px solid var(--cream-border);
+  padding-top: 10px;
+}
+.footer-dots { display: flex; gap: 6px; }
+.footer-dot {
+  width: 10px; height: 10px;
+  background: var(--cream-dark);
+  border: 2px solid var(--cream-border);
+  transition: background 0.3s, border-color 0.3s;
+}
+.footer-dot.active {
+  background: var(--pink-hot);
+  border-color: var(--pink-mid);
+  box-shadow: 0 0 6px var(--shadow-pink);
+}
+.footer-credit {
+  font-family: 'VT323', monospace;
+  font-size: 14px; color: var(--lavender-mid);
+  letter-spacing: 1px; opacity: 0.7; text-align: right;
+}
+
+/* ══════════════════════════════════════════════════
+   PIXEL PET
+══════════════════════════════════════════════════ */
+#petCanvas {
+  position: fixed; bottom: 20px; right: 20px;
+  z-index: 150; cursor: pointer;
+}
+.pet-bubble {
+  position: fixed; bottom: 80px; right: 20px;
+  z-index: 151;
+  background: var(--white);
+  border: 2px solid var(--pink-mid);
+  padding: 6px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 14px; color: var(--pink-deep);
+  display: none; white-space: nowrap;
+  box-shadow: 0 0 10px var(--glow-soft);
+}
+.pet-bubble.show { display: block; animation: popIn 0.2s; }
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ══════════════════════════════════════════════════
+   FLOATING HEARTS
+══════════════════════════════════════════════════ */
+.float-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 500;
+  font-size: 20px;
+  animation: floatUp 2s ease-out forwards;
+}
+@keyframes floatUp {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-120px) scale(1.5); }
+}
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════ */
+@media (max-height: 700px) {
+  .console { gap: 10px; }
+  .album-frame { width: 80px; height: 80px; }
+  #albumCanvas { width: 80px; height: 80px; }
+}
+
+/* ══════════════════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--pink-pale); }
